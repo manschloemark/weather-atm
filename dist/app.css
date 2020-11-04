@@ -1,0 +1,260 @@
+html, body {
+    font-family: "Noto Sans", arial, Helvetica, sans-serif;
+    font-size: 18pt;
+
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    margin: auto;
+
+    background-color: #eaeaea;
+}
+
+header { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 1em 10%;
+
+    background-image: linear-gradient(to right, #324262, #0088dd);
+}
+
+header #title {
+    display: block;
+    font-size: 1.5em;
+
+    color: #fff;
+}
+
+header * {
+    margin: 0;
+    padding: 0;
+    height: 44px;
+}
+
+#search-form {
+    display: flex;
+}
+
+#search-form *{
+    font-size: 1.2em;
+}
+
+#search-form input {
+    background-color: #eaeaea;
+
+    width: 12em;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border: none;
+
+    box-shadow: 0 0 4px inset #242424;
+}
+
+#search-form button {
+    background-color: #aeeaae;
+
+    border: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    padding: 0 0.25em;
+}
+
+#search-form button:hover {
+    background-color: #fea;
+}
+
+#unit-selection {
+    display: flex;
+    color: #242424;
+    border: 2px solid #696969;
+    border-radius: 24px;
+
+    width: 100px;
+}
+
+#unit-selection div {
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    width: 50%;
+    height: 100%;
+}
+
+#celsius {
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+}
+
+#fahrenheit {
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+}
+
+.selected-unit {
+    background-color: #fea;
+
+    transition: 0.5s;
+}
+
+.unselected-unit {
+    background-color: #696969;
+    transition: 0.5s
+}
+
+main {
+    width: 50%;
+    margin: 1em auto;
+
+    padding: 1em;
+}
+
+#empty-message, #loading {
+    text-align: center;
+
+    padding-top: 4em;
+}
+
+#empty-message #instructions {
+    font-size: 1.5em;
+}
+
+#forecast-box {
+    display: grid;
+    grid-template-areas: "location location"
+                         "basics temp"
+                         "precip precip"
+                         "timestamp timestamp";
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto min-content;
+                         
+    background-color: rgba(120, 120, 120, 0.5);
+    padding: 0 1em;
+    border-radius: 12px;
+}
+
+#forecast-box * {
+    padding: 0;
+    margin: 0;
+}
+
+#location {
+    grid-area: location;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 0;
+    margin: 1em;
+}
+
+#basics {
+    grid-area: basics;
+    margin: auto;
+}
+
+#weather-icon {
+    grid-area: icon;
+    margin: 0 50px;
+}
+
+#description {
+    font-size: 0.8em;
+    width: 200px;
+    text-align: center;
+}
+
+#temp {
+    grid-area: temp;
+    display: grid;
+    grid-template-areas: "current-temp space high-temp"
+                         "current-temp space ."
+                         "current-temp space low-temp";
+    grid-template-columns: 1fr auto 1fr;
+    height: min-content;
+
+    padding: 1em 0;
+}
+
+#temp-gradient {
+    grid-area: space;
+    background-image: linear-gradient(to bottom, #ff4422, #eaeaea, #2288ff);
+    width: 0.5em;
+    padding: 0;
+    margin: 0 0.5em;
+    height: 100%;
+
+    border-radius: 16px;
+}
+
+#current-temp {
+    grid-area: current-temp;
+    margin: 0;
+    font-size: 2em;
+    padding: 0.25em 0;
+    text-align: right;
+}
+
+.extra-temp {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+}
+
+#low-temp {
+    grid-area: low-temp;
+}
+
+#high-temp {
+    grid-area: high-temp;
+}
+
+#precipitation {
+    grid-area: precip;
+}
+
+#timestamp {
+    grid-area: timestamp;
+    font-size: 0.8em;
+    color: #4d4d4d;
+    font-style: italic;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+.hidden {
+    display: none !important;
+}
+/*
+#forecast-box {
+    padding: 1em;
+    color: #f0f0f0;
+    background-color: #182858;
+}
+
+#unit-selection {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    width: min-content;
+    outline: 4px solid black;
+}
+
+#unit-selection div {
+    padding: 8px 16px;
+}
+
+.selected-unit {
+    background-color: #ffcc00;
+}
+*/
