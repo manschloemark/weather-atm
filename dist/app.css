@@ -9,16 +9,16 @@ html, body {
 
 body {
     width: 100%;
-    margin: auto;
+    margin: 0 auto;
 
-    background-color: #aeaeae;
+    background-color: #eaeaea;
 }
 
 header { 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    height: 5%;
     padding: 1em 10%;
 
     background-image: linear-gradient(to right, #324262, #0088dd);
@@ -114,10 +114,8 @@ header * {
 main {
     width: min-content;
     min-width: 30%;
-    height: 100%;
     margin: 0 auto;
-    background-color: #eaeaea;
-    padding: 1em 3em;
+    padding: 1em 3em 0 3em;
 }
 
 #empty-message {
@@ -146,7 +144,7 @@ main {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto min-content auto min-content;
                          
-    background-color: #8e8e8e;
+    background-color: #aeaeae;
     border-radius: 12px;
 }
 
