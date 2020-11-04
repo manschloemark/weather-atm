@@ -95,9 +95,14 @@ const weatherApp = (() => {
 
     function setDescriptiveData(weather){
         const icon = document.querySelector("#weather-icon")
-        icon.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
+        const iconSource = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
+        icon.src = iconSource;
         icon.alt = weather.main;
         document.querySelector("#description").textContent = weather.description.toString()[0].toUpperCase() + weather.description.toString().slice(1);
+
+        // I think this is a neat idea but it only looks nice for some icons. It looks bad with the
+        // plain circle icons.
+        //document.querySelector("body").style.backgroundImage = `url(${iconSource})`;
     }
 
     function setTemperatureData(temp, units){
