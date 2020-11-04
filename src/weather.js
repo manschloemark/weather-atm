@@ -13,7 +13,7 @@ const suffixMap = {
         imperial: "mph"
     },
     volume: "mm",
-    humidity: "%",
+    percent: "%",
 }
 
 
@@ -44,8 +44,9 @@ const weatherApp = (() => {
 
         if(error){
             document.querySelector("#error-message").textContent = `Could not load weather data. Reason: ${error.message}`;
+        } else {
+            document.querySelector("#error-message").textContent = "Could not load weather data. Try again!";
         }
-
         emptyMessage.classList.remove("hidden");
     }
 
@@ -55,6 +56,7 @@ const weatherApp = (() => {
         console.log(weatherData);
         if(weatherData.cod == "200"){
             return {
+                code: weatherData.cod,
                 location: {
                     city: weatherData.name,
                     country: weatherData.sys.country,
@@ -70,12 +72,17 @@ const weatherApp = (() => {
                 precipitation: {
                     rain: weatherData["rain"] ?? 0,
                     snow: weatherData["snow"] ?? 0,
+                },
+                sky_stuff: {
                     clouds: weatherData.clouds.all,
                     wind: weatherData.wind.speed,
                 },
             };
         } else {
-            throw Error(weatherData.message);
+            return {
+                code: weatherData.cod,
+                message: wedatherData.message,
+            };
         }
     }
 
@@ -106,20 +113,26 @@ const weatherApp = (() => {
         const snowElement = document.querySelector("#snow");
         // I set the text content even if there is no snow or rain so the
         // element does not secretly have false data.
-        snowElement.textContent = `${precip.snow['1h']} ${suffixMap.volume}`;
-        rainElement.textContent = `${precip.rain['1h']} ${suffixMap.volume}`
+
+
         if(precip.rain){
-            rainElement.classList.remove("hidden");
+            rainElement.textContent = `Rain: ${precip.rain['1h']} ${suffixMap.volume}`
         } else {
-            rainElement.classList.add("hidden");
+            rainElement.textContent = "No rain"
         }
 
         if(precip.snow){
-            snowElement.classList.remove("hidden");
+            snowElement.textContent = `Snow: ${precip.snow['1h']} ${suffixMap.volume}`;
         } else {
-            snowElement.classList.add("hidden");
+            snowElement.textContent = "No snow"
         }
     }
+
+    function setSkyData(sky_stuff){
+        document.querySelector("#wind").textContent = `Wind: ${sky_stuff.wind} ${suffixMap.speed[units]}`
+        document.querySelector("#clouds").textContent = `Cloudiness: ${sky_stuff.clouds}${suffixMap.percent}`;
+    }
+
     function updateUnits() {
         const unitButton = document.getElementById("unit-selection");
         const celsius = document.querySelector("#celsius");
@@ -142,6 +155,7 @@ const weatherApp = (() => {
         setDescriptiveData(data.weather);
         setTemperatureData(data.temp, units);
         setPrecipitationData(data.precipitation);
+        setSkyData(data.sky_stuff);
         showForecast();
     }
 
@@ -150,9 +164,14 @@ const weatherApp = (() => {
         const location = document.querySelector("#city-input").value;
         try {
             data = await queryOpenWeatherAPI(location, units)
-            displayForecast(data);
+            if(data.code == "200"){
+                displayForecast(data);
+            } else {
+                showEmptyMessage(data.message);
+            }
         } catch (e) {
-            showEmptyMessage(e);
+            console.log(e);
+            showEmptyMessage(false);
         }
     }
 

@@ -77,7 +77,6 @@ header * {
 #unit-selection {
     display: flex;
     color: #242424;
-    border: 2px solid #696969;
     border-radius: 24px;
 
     width: 100px;
@@ -102,7 +101,7 @@ header * {
 }
 
 .selected-unit {
-    background-color: #fea;
+    background-color: #aeeaae;
 
     transition: 0.5s;
 }
@@ -130,17 +129,18 @@ main {
 }
 
 #forecast-box {
+    min-width: 600px;
+    margin: auto;
     display: grid;
     grid-template-areas: "location location"
                          "basics temp"
-                         "precip precip"
+                         "precip sky-stuff"
                          "timestamp timestamp";
 
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto min-content;
+    grid-template-rows: auto min-content auto min-content;
                          
     background-color: rgba(120, 120, 120, 0.5);
-    padding: 0 1em;
     border-radius: 12px;
 }
 
@@ -218,21 +218,84 @@ main {
     grid-area: high-temp;
 }
 
+#sky-stuff {
+    grid-area: sky-stuff;
+}
+
 #precipitation {
     grid-area: precip;
 }
 
+#precipitation, #sky-stuff {
+
+    padding: 1em;
+    text-align: center;
+}
 #timestamp {
     grid-area: timestamp;
     font-size: 0.8em;
     color: #4d4d4d;
     font-style: italic;
-    padding: 0;
+    padding: 0 1em 0 0;
     margin: 0;
     text-align: right;
 }
 .hidden {
     display: none !important;
+}
+
+@media (max-device-width: 800px) {
+    html, body {
+        font-size: 2em;
+        height: min-content;
+    }
+
+    header {
+        padding: 1em 2em;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search-form {
+        margin: 1em;
+        min-height: 2em;
+    }
+    
+    #search-form * {
+        min-height: 1.5em;
+    }
+
+    #search-form input {
+        width: 8em;
+    }
+
+    main {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #forecast-box {
+        height: 100%;
+        border-radius: 0;
+        grid-template-areas: "location"
+                             "timestamp"
+                             "basics"
+                             "temp"
+                             "precip"
+                             "sky-stuff";
+
+        grid-template-columns: auto;
+    }
+    #location {
+        margin-bottom: 0;
+    }
+
+    #timestamp {
+        font-size: 0.6em;
+        text-align: center;
+    }
 }
 /*
 #forecast-box {
