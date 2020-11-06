@@ -1,32 +1,15 @@
-import { weatherKey } from "./secret";
-const openWeatherURL = "https://api.openweathermap.org/data/2.5/weather";
-
-const suffixMap = {
-    temp: {
-        standard: "K",
-        metric: "\u2103",
-        imperial: "\u2109"
-    },
-    speed: {
-        standard: "m/s",
-        metric: "m/s",
-        imperial: "mph"
-    },
-    volume: "mm",
-    percent: "%",
-}
-
+import { weatherKey, suffixMap } from "./util";
 
 const weatherApp = (() => {
 
     let data = undefined;
     let units = "imperial";
-    //Set up private references to elements
+
     const loadingMessage = document.querySelector("#loading");
     const emptyMessage = document.querySelector("#empty-message");
     const forecastContainer = document.querySelector("#forecast-box");
 
-    const hideForecast = () => {
+    function hideForecast(){
         loadingMessage.classList.remove("hidden");
         emptyMessage.classList.add("hidden");
         forecastContainer.classList.add("hidden");
@@ -38,22 +21,21 @@ const weatherApp = (() => {
         forecastContainer.classList.remove("hidden");    
     }
 
-    function showEmptyMessage(error){
+    function showEmptyMessage(isException, error){
         loadingMessage.classList.add("hidden");
         forecastContainer.classList.add("hidden")
-
-        if(error){
-            document.querySelector("#error-message").textContent = `Could not load weather data. Reason: ${error.message}`;
+        document.querySelector("#instructions").textContent = "Could not load weather data. Try again!";
+        if(isException){
+            document.querySelector("#error-message").textContent = ""
         } else {
-            document.querySelector("#error-message").textContent = "Could not load weather data. Try again!";
+            document.querySelector("#error-message").textContent = "Reason: " + error.message;
         }
         emptyMessage.classList.remove("hidden");
     }
 
     async function queryOpenWeatherAPI(location, units){
-        const response = await fetch(`${openWeatherURL}?appid=${weatherKey}&q=${location}&units=${units}`, {mode: "cors"});
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${weatherKey}&q=${location}&units=${units}`, {mode: "cors"});
         const weatherData = await response.json();
-        console.log(weatherData);
         if(weatherData.cod == "200"){
             return {
                 code: weatherData.cod,
@@ -81,7 +63,7 @@ const weatherApp = (() => {
         } else {
             return {
                 code: weatherData.cod,
-                message: wedatherData.message,
+                message: weatherData.message,
             };
         }
     }
@@ -113,12 +95,8 @@ const weatherApp = (() => {
     }
 
     function setPrecipitationData(precip){
-        // Only display rain and snow data if relevant
         const rainElement = document.querySelector("#rain");
         const snowElement = document.querySelector("#snow");
-        // I set the text content even if there is no snow or rain so the
-        // element does not secretly have false data.
-
 
         if(precip.rain){
             rainElement.textContent = `Rain: ${precip.rain['1h']} ${suffixMap.volume}`
@@ -133,6 +111,7 @@ const weatherApp = (() => {
         }
     }
 
+    // I know this is a bad name
     function setSkyData(sky_stuff){
         document.querySelector("#wind").textContent = `Wind: ${sky_stuff.wind} ${suffixMap.speed[units]}`
         document.querySelector("#clouds").textContent = `Cloudiness: ${sky_stuff.clouds}${suffixMap.percent}`;
@@ -172,15 +151,13 @@ const weatherApp = (() => {
             if(data.code == "200"){
                 displayForecast(data);
             } else {
-                showEmptyMessage(data.message);
+                showEmptyMessage(false, data);
             }
         } catch (e) {
-            console.log(e);
-            showEmptyMessage(false);
+            showEmptyMessage(true, e);
         }
     }
 
-    showEmptyMessage();
     return {
         loadForecast,
         updateUnits,
@@ -197,3 +174,4 @@ document.querySelector("#search-form").addEventListener("submit", (event) => {
     event.preventDefault();
     weatherApp.loadForecast();
 });
+
