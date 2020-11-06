@@ -90,7 +90,7 @@ const weatherApp = (() => {
         const dateTime = new Date(location.time * 1000);
 
         document.querySelector("#location").textContent = `${location.city}, ${location.country}`
-        document.querySelector("#timestamp").textContent = `as of ${dateTime.toLocaleTimeString().slice(0, 4).concat(dateTime.toLocaleTimeString().slice(-3))} ${dateTime.toLocaleDateString()}`
+        document.querySelector("#timestamp").textContent = `as of ${dateTime.toLocaleTimeString().slice(0, 5).concat(dateTime.toLocaleTimeString().slice(-3))} ${dateTime.toLocaleDateString()}`
     }
 
     function setDescriptiveData(weather){

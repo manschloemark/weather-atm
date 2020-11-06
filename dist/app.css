@@ -137,9 +137,9 @@ main {
     margin: auto;
     display: grid;
     grid-template-areas: "location location"
+                         "timestamp timestamp"
                          "basics temp"
-                         "precip sky-stuff"
-                         "timestamp timestamp";
+                         "precip sky-stuff";
 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto min-content auto min-content;
@@ -158,7 +158,7 @@ main {
     text-align: center;
     font-size: 1.2em;
     padding: 0;
-    margin: 1em;
+    margin: 1em 1em 0;
 }
 
 #basics {
@@ -242,7 +242,7 @@ main {
     font-style: italic;
     padding: 0 1em 0 0;
     margin: 0;
-    text-align: right;
+    text-align: center;
 }
 .hidden {
     display: none !important;
