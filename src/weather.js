@@ -12,7 +12,7 @@ const weatherApp = (() => {
     function hideForecast(){
         loadingMessage.classList.remove("hidden");
         emptyMessage.classList.add("hidden");
-        forecastContainer.classList.add("hidden");
+        // forecastContainer.classList.add("hidden");
     }
 
     function showForecast(){
