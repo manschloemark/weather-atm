@@ -10,19 +10,19 @@ const weatherApp = (() => {
     const forecastContainer = document.querySelector("#forecast-box");
 
     function hideForecast(){
-        loadingMessage.classList.remove("hidden");
+        //loadingMessage.classList.remove("hidden");
         emptyMessage.classList.add("hidden");
         // forecastContainer.classList.add("hidden");
     }
 
     function showForecast(){
-        loadingMessage.classList.add("hidden");
+        //loadingMessage.classList.add("hidden");
         emptyMessage.classList.add("hidden");
         forecastContainer.classList.remove("hidden");    
     }
 
     function showEmptyMessage(isException, error){
-        loadingMessage.classList.add("hidden");
+        //loadingMessage.classList.add("hidden");
         forecastContainer.classList.add("hidden")
         document.querySelector("#instructions").textContent = "Could not load weather data. Try again!";
         if(isException){
@@ -34,8 +34,15 @@ const weatherApp = (() => {
     }
 
     async function queryOpenWeatherAPI(location, units){
+        // Using linear gradients to make the search bar "load"
+        // It's kind of cheap but it works for now.
+        // I think using CSS transitions could be better.
+        const searchBar = document.querySelector("#city-input");
+        searchBar.style.backgroundImage = "linear-gradient(to right, #aeeaae, #eaeaea, #eaeaea";
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${weatherKey}&q=${location}&units=${units}`, {mode: "cors"});
+        searchBar.style.backgroundImage = "linear-gradient(to right, #aeeaae, #aeeaae, #eaeaea";
         const weatherData = await response.json();
+        searchBar.style.backgroundImage = "linear-gradient(to right, #aeeaae, #aeeaae, #aeeaae";
         if(weatherData.cod == "200"){
             return {
                 code: weatherData.cod,
@@ -72,7 +79,7 @@ const weatherApp = (() => {
         const dateTime = new Date(location.time * 1000);
 
         document.querySelector("#location").textContent = `${location.city}, ${location.country}`
-        document.querySelector("#timestamp").textContent = `as of ${dateTime.toLocaleTimeString().slice(0, 5).concat(dateTime.toLocaleTimeString().slice(-3))} ${dateTime.toLocaleDateString()}`
+        document.querySelector("#timestamp").textContent = `as of ${dateTime.toLocaleTimeString().slice(0, -6).concat(dateTime.toLocaleTimeString().slice(-3))} ${dateTime.toLocaleDateString()}`
     }
 
     function setDescriptiveData(weather){
@@ -156,6 +163,7 @@ const weatherApp = (() => {
         } catch (e) {
             showEmptyMessage(true, e);
         }
+    await setTimeout(() => {document.querySelector("#city-input").style.backgroundImage = "none"}, 250);
     }
 
     return {

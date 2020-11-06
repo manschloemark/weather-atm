@@ -17,7 +17,6 @@ body {
 header { 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     height: 5%;
     padding: 1em 10%;
 
@@ -25,6 +24,7 @@ header {
 }
 
 header #title {
+    flex: 1;
     display: block;
     font-size: 1.5em;
     line-height: 44px;
@@ -33,7 +33,7 @@ header #title {
 }
 
 header * {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     height: 44px;
 }
@@ -73,11 +73,13 @@ header * {
 }
 
 #unit-selection {
+    flex: 1;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     color: #242424;
     border-radius: 24px;
     font-size: 0.7em;
-    width: min-content;
 }
 
 #unit-selection div {
@@ -86,6 +88,7 @@ header * {
     text-align: center;
     height: 100%;
     min-width: 80px;
+    margin: 0;
 }
 
 #celsius {
