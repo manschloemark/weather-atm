@@ -1,4 +1,5 @@
 import { weatherKey, suffixMap } from "./util";
+import "./app.css";
 
 const weatherApp = (() => {
 
