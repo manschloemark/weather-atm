@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Weather At the Moment</title>
+        <link rel="icon" type="image/png">
+        <link rel="stylesheet" href="app.css">
+    </head>
+    <body>
+        <header>
+            <p id="title">Weather ATM</p>
+            <form id="search-form">
+                <input type="text" id="city-input" placeholder="Enter a city!">
+                <button type="submit">Search</button>
+            </form>
+            <div id="unit-selection">
+                <div id="celsius" class="unselected-unit" data-unit="metric">
+                    Metric
+                </div>
+                <div id="fahrenheit" class="selected-unit" data-unit="imperial">
+                    Imperial
+                </div>
+            </div>
+        </header> 
+        <main>
+            <div id="empty-message">
+                <p id="instructions">
+                    Enter a city to look at the current weather!
+                </p>
+                <p id="error-message"></p>
+            </div>
+            <div id="forecast-box" class="hidden">
+                <p id="location"></p>
+                <figure id="basics">
+                    <img id="weather-icon">
+                    <figcaption id="description"></figcaption>
+                </figure>
+                <div id="temp">
+                    <p id="current-temp"></p>
+                    <div id="temp-gradient"></div>
+                    <p class="extra-temp" id="low-temp"></p>
+                    <p class="extra-temp" id="high-temp"></p>
+                </div>
+                <div id="sky-stuff">
+                    <p id="wind"></p>
+                    <p id="clouds"></p>
+                </div>
+                <div id="precipitation">
+                    <p id="rain"></p>
+                    <p id="snow"></p>
+                </div>
+                <p id="timestamp"></p>
+            </div>
+            <p id="loading" class="hidden">
+                Gathering Data...
+            </p>
+        </main>
+    </body>
+    <script src="main.js"></script>
+</html>
